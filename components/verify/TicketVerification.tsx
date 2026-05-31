@@ -1,5 +1,5 @@
 "use client";
-
+import { useSpotStore } from "@/store/useSpotStore";
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,10 @@ export default function TicketVerification() {
   const [ticketId, setTicketId] = useState("");
   const [name, setName] = useState("");
   const [verified, setVerified] = useState(false);
+  const selectedEvent = useSpotStore(
+  (state) => state.selectedEvent
+);
+  
 
   const verifyTicket = () => {
     if (
@@ -30,6 +34,15 @@ export default function TicketVerification() {
       <p className="mt-2 text-gray-400">
         Verify event access before reserving parking.
       </p>
+      <div className="mt-6 rounded-xl border border-white/10 bg-black/30 p-4">
+  <p className="text-sm text-gray-400">
+    Selected Event
+  </p>
+
+  <h3 className="mt-1 text-xl font-semibold">
+    {selectedEvent || "No Event Selected"}
+  </h3>
+</div>
 
       <div className="mt-8 space-y-4">
 

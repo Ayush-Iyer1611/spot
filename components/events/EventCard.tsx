@@ -1,6 +1,9 @@
-import Link from "next/link";
+"use client";
+
+import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useSpotStore } from "@/store/useSpotStore";
 
 type EventCardProps = {
   title: string;
@@ -15,18 +18,25 @@ export default function EventCard({
   date,
   slots,
 }: EventCardProps) {
+
+  const setEvent = useSpotStore(
+    (state) => state.setEvent
+  );
+  const router = useRouter();
+
   return (
     <Card className="border-white/10 bg-white/5 text-white transition hover:bg-white/10">
-      
+
       <CardContent className="p-6">
-        
+
         <div className="mb-6 flex items-center justify-between">
-          
+
           <div className="h-3 w-3 rounded-full bg-green-400 animate-pulse" />
 
           <span className="text-sm text-gray-400">
             {slots} Slots
           </span>
+
         </div>
 
         <h2 className="text-2xl font-semibold">
@@ -41,11 +51,16 @@ export default function EventCard({
           {date}
         </p>
 
-        <Link href="/verify">
-          <Button className="mt-8 w-full">
-            Continue
-          </Button>
-        </Link>
+        <Button
+  className="mt-8 w-full"
+  onClick={() => {
+    setEvent(title);
+    router.push("/verify");
+  }}
+>
+  Reserve Parking
+</Button>
+
       </CardContent>
     </Card>
   );
