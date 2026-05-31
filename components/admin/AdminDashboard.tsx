@@ -1,8 +1,12 @@
 "use client";
 
 import Papa from "papaparse";
+
 import { useGuestStore } from "@/store/useGuestStore";
+import { useEventStore } from "@/store/useEventStore";
+
 import EventSummary from "./EventSummary";
+import ArrivalHeatmap from "./ArrivalHeatmap";
 
 const totalParkingSlots = 20;
 
@@ -10,6 +14,12 @@ export default function AdminDashboard() {
   const guests = useGuestStore(
     (state) => state.guests
   );
+  const event = useEventStore(
+  (state) => state.event
+);
+
+const capacity =
+  event?.totalSlots || 0;
 
   const setGuests = useGuestStore(
     (state) => state.setGuests
@@ -29,7 +39,7 @@ export default function AdminDashboard() {
     (g: any) => g.vehicleType === "EV"
   ).length;
 
-  const capacity = 500;
+  
 
   const occupied = totalGuests;
 
@@ -62,6 +72,7 @@ const parkingSlots = Array.from(
   return (
     <div className="space-y-10">
         <EventSummary />
+        <ArrivalHeatmap />
 
       {/* KPI CARDS */}
 
@@ -257,8 +268,8 @@ const parkingSlots = Array.from(
                     </td>
 
                     <td>
-                      Pending
-                    </td>
+  P-{index + 1}
+</td>
 
                     <td>
                       {person.arrivalTime}
