@@ -1,6 +1,4 @@
-ticketId,name,event,email,vehicleType,arrivalTime
-spot123,Ayush,Interstellar Re-Release,ayush@example.com,Car,18:30
-spot124,Rahul,Interstellar Re-Release,rahul@example.com,Bike,18:45
-spot125,Priya,Interstellar Re-Release,priya@example.com,EV,19:00
-spot126,Karan,TechX Bengaluru,karan@example.com,Car,09:00
-spot127,Ananya,BMSCE Cultural Fest,ananya@example.com,Car,10:30
+ticketId,name,event,vehicleType,arrivalTime
+spot123,Ayush,Interstellar Re-Release,Car,18:30
+spot124,Rahul,Interstellar Re-Release,Bike,18:45
+spot125,Priya,TechX Bengaluru,EV,19:00
