@@ -1,13 +1,20 @@
+import Navbar from "@/components/landing/navbar";
+import TicketVerification from "@/components/verify/TicketVerification";
+
 export default function VerifyPage() {
   return (
-    <main className="min-h-screen bg-black text-white p-10">
-      <h1 className="text-5xl font-bold">
-        Verify Ticket
-      </h1>
+    <main className="min-h-screen bg-black text-white">
+      
+      <Navbar />
 
-      <p className="mt-4 text-gray-400">
-        Upload or scan event tickets for validation.
-      </p>
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        
+        <h1 className="mb-12 text-center text-5xl font-bold">
+          Verify Event Ticket
+        </h1>
+
+        <TicketVerification />
+      </section>
     </main>
   );
 }
