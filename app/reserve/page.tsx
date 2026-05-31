@@ -1,13 +1,21 @@
+import Navbar from "@/components/landing/navbar";
+import ParkingReservation from "@/components/reserve/ParkingReservation";
+
 export default function ReservePage() {
   return (
-    <main className="min-h-screen bg-black text-white p-10">
-      <h1 className="text-5xl font-bold">
-        Reserve Parking
-      </h1>
+    <main className="min-h-screen bg-black text-white">
 
-      <p className="mt-4 text-gray-400">
-        Verified attendees can reserve parking slots here.
-      </p>
+      <Navbar />
+
+      <section className="mx-auto max-w-7xl px-6 py-24">
+
+        <h1 className="mb-12 text-center text-5xl font-bold">
+          Reserve Parking
+        </h1>
+
+        <ParkingReservation />
+
+      </section>
     </main>
   );
 }
