@@ -11,9 +11,30 @@ interface Guest {
 interface GuestState {
   guests: Guest[];
   setGuests: (guests: Guest[]) => void;
+  loadGuests: () => void;
 }
 
-export const useGuestStore = create<GuestState>((set) => ({
-  guests: [],
-  setGuests: (guests) => set({ guests }),
-}));
+export const useGuestStore =
+  create<GuestState>((set) => ({
+
+    guests: [],
+
+    setGuests: (guests) =>
+      set({ guests }),
+
+    loadGuests: () => {
+
+      const stored =
+        localStorage.getItem(
+          "guests"
+        );
+
+      if (!stored) return;
+
+      set({
+        guests: JSON.parse(stored),
+      });
+
+    },
+
+  }));

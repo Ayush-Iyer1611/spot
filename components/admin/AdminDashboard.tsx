@@ -4,6 +4,7 @@ import Papa from "papaparse";
 
 import { useGuestStore } from "@/store/useGuestStore";
 import { useEventStore } from "@/store/useEventStore";
+import { useParkingStore } from "@/store/useParkingStore";
 
 import EventSummary from "./EventSummary";
 import ArrivalHeatmap from "./ArrivalHeatmap";
@@ -41,7 +42,14 @@ const capacity =
 
   
 
-  const occupied = totalGuests;
+
+const checkedIn =
+  useParkingStore(
+    (state) => state.checkedIn
+  );
+
+const occupied =
+  checkedIn.length;
 
   const available =
     capacity - occupied;
@@ -143,9 +151,12 @@ const parkingSlots = Array.from(
                       guest.name
                   );
 
-                setGuests(
-                  filteredGuests
-                );
+                setGuests(filteredGuests);
+
+localStorage.setItem(
+  "guests",
+  JSON.stringify(filteredGuests)
+);
 
               },
             });

@@ -30,9 +30,24 @@ interface EventState {
 export const useEventStore =
   create<EventState>((set) => ({
 
-    event: null,
+    event:
+      typeof window !== "undefined"
+        ? JSON.parse(
+            localStorage.getItem(
+              "event"
+            ) || "null"
+          )
+        : null,
 
-    setEvent: (event) =>
-      set({ event }),
+    setEvent: (event) => {
+
+      localStorage.setItem(
+        "event",
+        JSON.stringify(event)
+      );
+
+      set({ event });
+
+    },
 
   }));

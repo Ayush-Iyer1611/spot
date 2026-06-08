@@ -37,10 +37,23 @@ export default function SetupPage() {
 
   const submit = () => {
 
-    setEvent(form);
+  console.log("SUBMIT CLICKED");
 
-    router.push("/admin");
-  };
+  console.log(form);
+
+  localStorage.setItem(
+    "event",
+    JSON.stringify(form)
+  );
+
+  console.log(
+    localStorage.getItem("event")
+  );
+
+  setEvent(form);
+
+  router.push("/admin");
+};
 
   return (
 
