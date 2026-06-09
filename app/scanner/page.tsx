@@ -1,33 +1,25 @@
 "use client";
-import { useGuestStore } from "@/store/useGuestStore";
-import { useEffect, useState } from "react";
+
+import { useEffect } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 
-
 export default function ScannerPage() {
- 
-  
-  const guests =
-  useGuestStore(
-    (state) => state.guests
-  );
-
-const [result, setResult] =
-  useState<any>(null);
 
   useEffect(() => {
-    
-    
 
     let scanner: Html5Qrcode;
 
     async function startScanner() {
 
       try {
-        
 
         const cameras =
           await Html5Qrcode.getCameras();
+
+        console.log(
+          "CAMERAS:",
+          cameras
+        );
 
         scanner =
           new Html5Qrcode("reader");
@@ -35,47 +27,40 @@ const [result, setResult] =
         await scanner.start(
           cameras[0].id,
           {
-            fps: 10,
-            qrbox: 250,
+            fps: 30,
+            qrbox: {
+              width: 250,
+              height: 250,
+            },
+            aspectRatio: 1.0,
           },
           (decodedText) => {
-             console.log("SCANNED:", decodedText);
-console.log("GUESTS:", guests);
-console.log(
-  "TOTAL GUESTS:",
-  guests.length
-);
 
-  const guest =
-    guests.find(
-      (g) =>
-        g.ticketId === decodedText
-    );
+            console.log(
+              "SCANNED:",
+              decodedText
+            );
 
-  if (!guest) {
+            const stored =
+              localStorage.getItem(
+                "guests"
+              );
 
-    setResult({
-      error:
-        "Guest Not Found",
-    });
+            console.log(
+              "LOCAL STORAGE:",
+              stored
+            );
 
-    return;
-  }
-
-  setResult({
-    success: true,
-    guest,
-  });
-
-},
+          },
           () => {}
         );
 
-      }
+      } catch (error) {
 
-      catch (error) {
-
-        console.error(error);
+        console.error(
+          "SCANNER ERROR:",
+          error
+        );
 
       }
 
@@ -86,12 +71,16 @@ console.log(
     return () => {
 
       if (scanner) {
-        scanner.stop();
+
+        scanner
+          .stop()
+          .catch(() => {});
+
       }
 
     };
 
-  }, [guests]);
+  }, []);
 
   return (
 
@@ -105,55 +94,10 @@ console.log(
         id="reader"
         style={{
           width: "100%",
-          maxWidth: "500px",
-          minHeight: "300px",
+          maxWidth: "600px",
+          minHeight: "400px",
         }}
       />
-      {result && (
-
-  <div className="mt-8 rounded-xl border border-white/10 bg-white/5 p-6">
-
-    {result.error ? (
-
-      <div className="text-red-400">
-
-        ❌ {result.error}
-
-      </div>
-
-    ) : (
-
-      <div>
-
-        <h2 className="mb-4 text-2xl font-bold text-green-400">
-
-          ✅ VERIFIED
-
-        </h2>
-
-        <p>
-          Name: {result.guest.name}
-        </p>
-
-        <p>
-          Vehicle: {result.guest.vehicleType}
-        </p>
-
-        <p>
-          Ticket: {result.guest.ticketId}
-        </p>
-
-        <p>
-          Arrival: {result.guest.arrivalTime}
-        </p>
-
-      </div>
-
-    )}
-
-  </div>
-
-)}
 
     </main>
 
